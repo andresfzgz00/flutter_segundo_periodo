@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/contacts.dart';
+import './add_contact_screen.dart';
+import './contact_detail_screen.dart';
 
 class ContactsScreen extends StatefulWidget {
   const ContactsScreen({Key? key}) : super(key: key);
@@ -36,18 +38,35 @@ class _ContactsScreenState extends State<ContactsScreen> {
     final contactsData = Provider.of<Contacts>(context);
     final contacts = contactsData.contacts;
 
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(contacts[index].avatar),
-            ),
-            title: Text('${contacts[index].first_name} ${contacts[index].last_name}'),
-            subtitle: Text(contacts[index].email),
-          );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Contacts"),
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap:() {
+                Navigator.of(context).pushNamed(ContactDetailScreen.routeName, arguments: contacts[index]);
+              },
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(contacts[index].avatar),
+                ),
+                title: Text(
+                    '${contacts[index].first_name} ${contacts[index].last_name}'),
+                subtitle: Text(contacts[index].email),
+              ),
+            );
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(AddContactScreen.routeName);
         },
+        child: const Icon(Icons.add),
       ),
     );
   }

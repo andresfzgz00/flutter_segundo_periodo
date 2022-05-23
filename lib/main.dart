@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import './providers/contacts.dart';
 import './screens/contacts_screen.dart';
+import './screens/add_contact_screen.dart';
+import './screens/contact_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +25,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.amber
       ),
       home: ContactsScreen(),
+      routes: {
+        AddContactScreen.routeName: (_) => const AddContactScreen(),
+        ContactDetailScreen.routeName: (_) => ContactDetailScreen()
+      }
     ),
     
     ); 
